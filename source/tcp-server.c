@@ -52,8 +52,9 @@ void server(void* arg) {
 		struct netconn* newconn;
 
 		err = netconn_accept(conn, &newconn);
-//		assert(newconn != NULL);
 		assert(err == ERR_OK);
+
+		newconn->recv_timeout = 4000;
 
 		PRINTF("Server - Connection established\n\r");
 
@@ -90,8 +91,6 @@ int main(void) {
 	BOARD_InitBootPins();
 	BOARD_InitPins();
 	BOARD_InitDebugConsole();
-
-	srand(time(NULL));
 
 	DnetConfig config = dnet_init("192.168.0.103", NULL, NULL, dnet_get_uid_location());
 
